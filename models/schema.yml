@@ -1,56 +1,8 @@
+version: 2
 
 sources:
-  - name: Raw
-    description: "info on gwz data"
-    schema: gz_raw_data      
-
-    tables:
-      - name: products
-        description: "products info"
-        columns:
-          - name: products_id
-            description: "Unique identifier for each product"
-            tests:
-              - not_null
-              - unique
-          - name: purchSE_PRICE
-            description: "Purchase price of the product"
-
-      - name: sales
-        description: "Source table containing sales data"
-        columns:
-          - name: date_date
-            description: "Date of the sale"
-            tests:
-              - not_null
-          - name: orders_id
-            description: "Unique identifier for each order"
-            tests:
-              - not_null
-              - unique
-          - name: revenue
-            description: "Revenue generated from each sale"
-          - name: pdt_id
-            description: "Foreign key referencing the product"
-            tests:
-              - not_null
-          - name: quantity
-            description: "Quantity of products sold in the order"
-
-      - name: ship
-        description: "Source table containing shipping details"
-        columns:
-          - name: orders_id
-            description: "Unique identifier for each order, linking to sales data"
-            tests:
-              - not_null
-          - name: shipping_fee
-            description: "Primary shipping fee for the order"
-          - name: shipping_fee1
-            description: "Additional shipping fee if applicable"
-          - name: log_cost
-            description: "Logistics cost for the order"
-          - name: ship_cost
-            description: "Total cost of shipping"
-            tests:
-              - not_null
+   - name: gz_raw_data
+     tables:
+       - name: raw_gz_product
+       - name: raw_gz_sales
+       - name: raw_gz_ship
