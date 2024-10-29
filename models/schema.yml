@@ -1,8 +1,59 @@
 version: 2
 
 sources:
-   - name: gz_raw_data
-     tables:
-       - name: raw_gz_product
-       - name: raw_gz_sales
-       - name: raw_gz_ship
+  - name: raw
+    schema: gz_raw_data
+    tables:
+      - name: sale
+        identifier: raw_gz_sales
+        description: "Sales of Greenweez / we have one row per product_id found in each orders_id"
+        freshness:
+          loaded_at_field: "CAST(loaded_at AS TIMESTAMP)"  # Replace with your actual timestamp column
+          warn_after: { count: 90, period: day }  # Warning if the freshest data is older than 90 days
+        columns:
+          - name: date_date
+            description: "Date of purchase"
+            tests:
+              - not_null
+          - name: orders_id
+            description: "Identifier of order"
+            tests:
+              - not_null
+          - name: product_id
+            description: "Product identifier"
+          - name: revenue
+            description: "Revenues"
+          - name: quantity
+            description: "Amount"
+
+      - name: product
+        identifier: raw_gz_product
+        description: "Source table containing products data"
+        columns:
+          - name: products_id
+            description: "Unique identifier for the product"
+            tests:
+              - not_null
+          - name: purchase_price
+            description: "Cost of goods"
+          - name: revenue
+            description: "Revenue generated from each sale"
+
+      - name: ship
+        identifier: raw_gz_ship
+        description: "Source table containing shipping details"
+        columns:
+          - name: orders_id
+            description: "Unique identifier for each order, linking to sales data"
+            tests:
+              - not_null
+          - name: shipping_fee
+            description: "Primary shipping fee for the order"
+          - name: shipping_fee1
+            description: "Additional shipping fee if applicable"
+          - name: log_cost
+            description: "Logistics cost for the order"
+          - name: ship_cost
+            description: "Total cost of shipping"
+            tests:
+              - not_null
