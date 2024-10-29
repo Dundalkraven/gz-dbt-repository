@@ -7,9 +7,7 @@ sources:
       - name: sale
         identifier: raw_gz_sales
         description: "Sales of Greenweez / we have one row per product_id found in each orders_id"
-        freshness:
-          loaded_at_field: "CAST(loaded_at AS TIMESTAMP)"  # Replace with your actual timestamp column
-          warn_after: { count: 90, period: day }  # Warning if the freshest data is older than 90 days
+        
         columns:
           - name: date_date
             description: "Date of purchase"
