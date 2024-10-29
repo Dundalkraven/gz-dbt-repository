@@ -6,8 +6,10 @@ sources:
     tables:
       - name: sale
         identifier: raw_gz_sales
-        description: "Sales of Greenweez / we have one row per product_id found in each orders_id"
-        
+        description: "Sales data with one row per product_id found in each orders_id."
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+        freshness:
+          warn_after: {count: 90, period: day}
         columns:
           - name: date_date
             description: "Date of purchase"
@@ -17,16 +19,19 @@ sources:
             description: "Identifier of order"
             tests:
               - not_null
-          - name: product_id
+          - name: pdt_id
             description: "Product identifier"
           - name: revenue
             description: "Revenues"
           - name: quantity
-            description: "Amount"
+            description: "The quantity of products purchased for a given order"
+            tests:
+              - unique:
+                  column_name: "(orders_id || '-' || pdt_id)"
 
       - name: product
         identifier: raw_gz_product
-        description: "Source table containing products data"
+        description: "Source table containing products data."
         columns:
           - name: products_id
             description: "Unique identifier for the product"
@@ -39,7 +44,7 @@ sources:
 
       - name: ship
         identifier: raw_gz_ship
-        description: "Source table containing shipping details"
+        description: "Source table containing shipping details."
         columns:
           - name: orders_id
             description: "Unique identifier for each order, linking to sales data"
