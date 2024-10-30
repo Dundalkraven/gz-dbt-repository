@@ -9,4 +9,3 @@ FROM {{ref('int_campaigns')}}
  GROUP BY 
  date_date
 order by date_date
-  
