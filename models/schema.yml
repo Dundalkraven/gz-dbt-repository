@@ -1,3 +1,5 @@
+version: 2
+
 sources:
   - name: raw
     schema: gz_raw_data
@@ -9,20 +11,18 @@ sources:
             description: "Date of launch"
           - name: paid_source
             description: "Amount paid"
-            
           - name: campaign_key
             description: "Identifier key"
             tests:
               - not_null
           - name: campgn_name
-            description: "Label"
+            description: "Campaign name"
           - name: ad_cost
             description: "Cost of ads"
-          
           - name: impression
-            description: "Text input"
+            description: "Number of ad impressions"
           - name: click
-            description: "Client input"
+            description: "Number of ad clicks"
 
       - name: facebook
         identifier: raw_gz_facebook
@@ -64,7 +64,7 @@ sources:
           - name: pdt_id
             description: "Product identifier"
           - name: revenue
-            description: "Revenues"
+            description: "Revenues from sales"
           - name: quantity
             description: "The quantity of products purchased for a given order"
 
@@ -105,7 +105,7 @@ models:
     description: "Margin calculation per order"
     columns:
       - name: orders_id
-        description: "Primary key"
+        description: "Primary key for the order"
         tests:
           - unique
           - not_null
@@ -134,11 +134,11 @@ models:
     description: "Margin calculation per order line / product sales"
     columns:
       - name: orders_id
-        description: "Orders key"
+        description: "Order ID"
         tests:
           - not_null
       - name: products_id
-        description: "Products key"
+        description: "Product ID"
         tests:
           - not_null
       - name: margin
@@ -154,11 +154,11 @@ models:
         tests:
           - not_null
       - name: revenue
-        description: "Sum of revenue per order"
+        description: "Revenue generated per product"
         tests:
           - not_null
       - name: quantity
-        description: "Sum of quantity per order"
+        description: "Quantity of products in the order"
         tests:
           - not_null
     tests:
@@ -169,7 +169,7 @@ models:
     description: "Operational margin calculation per order"
     columns:
       - name: orders_id
-        description: "Primary key"
+        description: "Primary key for the order"
         tests:
           - unique
           - not_null
@@ -198,6 +198,61 @@ models:
       - name: shipping_fee
         description: "The price the customer pays for shipping"
       - name: logcost
-        description: "The cost of preparing the parcel in the distribution center/warehouse"
+        description: "Logistics cost incurred for order processing"
       - name: ship_cost
-        description: "Shipping cost paid by Greenweez to the carrier/logistics provider"
+        description: "Shipping cost paid by the company to the carrier/logistics provider"
+
+  - name: finance_days
+    description: "View combining financial data with campaign metrics"
+    columns:
+      - name: date_date
+        description: "Date of the record"
+        tests:
+          - not_null
+      - name: ads_margin
+        description: "Difference between operational margin and advertising costs"
+       
+      - name: average_basket
+        description: "Average basket size for orders"
+        tests:
+          - not_null
+      - name: operational_margin
+        description: "Calculated as revenue minus all operational costs"
+        
+      - name: ads_cost
+        description: "Total cost associated with advertising on this date"
+        
+      - name: ads_impression
+        description: "Number of ad impressions shown on this date"
+          
+      - name: ads_clicks
+        description: "Number of ad clicks on this date"
+        
+      - name: quantity
+        description: "Total quantity of items sold"
+        tests:
+          - not_null
+      - name: revenue
+        description: "Total revenue generated on this date"
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: "Cost of goods sold on this date"
+        tests:
+          - not_null
+      - name: margin
+        description: "Margin calculated as revenue minus purchase cost"
+        tests:
+          - not_null
+      - name: shipping_fee
+        description: "The shipping fee charged to customers"
+        tests:
+          - not_null
+      - name: logcost
+        description: "Logistics cost incurred for this date"
+        tests:
+          - not_null
+      - name: ship_cost
+        description: "Total cost of shipping incurred for this date"
+        tests:
+          - not_null
