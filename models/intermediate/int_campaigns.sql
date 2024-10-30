@@ -1,10 +1,9 @@
--- int_campaign_file
 
 select
     date_date,
     paid_source,
     campaign_key,
-    campgn_name as campaign_name,
+    campgn_name,
     CAST(ads_cost AS FLOAT64) as ads_cost,
     impression,
     click
@@ -16,7 +15,7 @@ select
     date_date,
     paid_source,
     campaign_key,
-    campgn_name as campaign_name,
+    campgn_name,
     CAST(ads_cost AS FLOAT64) as ads_cost,
     impression,
     click
@@ -28,7 +27,7 @@ select
     date_date,
     paid_source,
     campaign_key,
-    campgn_name as campaign_name,
+    campgn_name,
     CAST(ads_cost AS FLOAT64) as ads_cost,
     impression,
     click
@@ -40,7 +39,7 @@ select
     date_date,
     paid_source,
     campaign_key,
-    campgn_name as campaign_name,
+    campgn_name,
     CAST(ads_cost AS FLOAT64) as ads_cost,
     impression,
     click
