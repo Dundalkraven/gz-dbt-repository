@@ -4,12 +4,50 @@ sources:
     tables:
       - name: adwords
         identifier: raw_gz_adwords
+        columns:
+          - name: date_date
+            description: "Date of launch"
+          - name: paid_source
+            description: "Amount paid"
+            
+          - name: campaign_key
+            description: "Identifier key"
+            tests:
+              - not_null
+          - name: campgn_name
+            description: "Label"
+          - name: ad_cost
+            description: "Cost of ads"
+          
+          - name: impression
+            description: "Text input"
+          - name: click
+            description: "Client input"
+
       - name: facebook
         identifier: raw_gz_facebook
+        columns:
+          - name: date_date
+            description: "Date of purchase"
+            tests:
+              - not_null
+
       - name: criteo
         identifier: raw_gz_criteo
+        columns:
+          - name: date_date
+            description: "Date of purchase"
+            tests:
+              - not_null
+
       - name: bing
         identifier: raw_gz_bing
+        columns:
+          - name: date_date
+            description: "Date of purchase"
+            tests:
+              - not_null
+
       - name: sale
         identifier: raw_gz_sales
         description: "Sales data with one row per product_id found in each orders_id."
@@ -19,10 +57,6 @@ sources:
             count: 90
             period: day
         columns:
-          - name: date_date
-            description: "Date of purchase"
-            tests:
-              - not_null
           - name: orders_id
             description: "Identifier of order"
             tests:
@@ -33,6 +67,7 @@ sources:
             description: "Revenues"
           - name: quantity
             description: "The quantity of products purchased for a given order"
+
       - name: product
         identifier: raw_gz_product
         description: "Source table containing products data."
@@ -45,6 +80,7 @@ sources:
             description: "Cost of goods"
           - name: revenue
             description: "Revenue generated from each sale"
+
       - name: ship
         identifier: raw_gz_ship
         description: "Source table containing shipping details."
