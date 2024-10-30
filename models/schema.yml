@@ -2,12 +2,20 @@ sources:
   - name: raw
     schema: gz_raw_data
     tables:
+      - name: adwords
+        identifier: raw_gz_adwords
+      - name: facebook
+        identifier: raw_gz_facebook
+      - name: criteo
+        identifier: raw_gz_criteo
+      - name: bing
+        identifier: raw_gz_bing
       - name: sale
         identifier: raw_gz_sales
         description: "Sales data with one row per product_id found in each orders_id."
         loaded_at_field: "CAST(date_date AS TIMESTAMP)"
         freshness:
-          warn_after: 
+          warn_after:
             count: 90
             period: day
         columns:
@@ -25,7 +33,6 @@ sources:
             description: "Revenues"
           - name: quantity
             description: "The quantity of products purchased for a given order"
-
       - name: product
         identifier: raw_gz_product
         description: "Source table containing products data."
@@ -38,7 +45,6 @@ sources:
             description: "Cost of goods"
           - name: revenue
             description: "Revenue generated from each sale"
-
       - name: ship
         identifier: raw_gz_ship
         description: "Source table containing shipping details."
